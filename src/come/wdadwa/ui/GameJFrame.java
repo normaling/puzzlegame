@@ -1,30 +1,48 @@
 package come.wdadwa.ui;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
+
 
 //游戏主界面
 public class GameJFrame extends JFrame {
-
+    //管理图片位置信息的数据（已经打乱好的）
+    int[][] data=new int[4][4];
     public GameJFrame() {
         //初始化界面
         initJFrame();
         //初始化菜单栏
         initJMenuBar();
+        //初始化数据(打乱图片)
+        initData();
         //初始化图片
         initImage();
         //让界面显示出来，这个要放到最后写
         this.setVisible(true);
     }
 
+    private void initData() {
+        int[] tmpArr={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+        Random r=new Random();
+        for (int i = 0; i < tmpArr.length; i++) {
+            int index=r.nextInt(tmpArr.length);
+            int tmp=tmpArr[i];
+            tmpArr[i]=tmpArr[index];
+            tmpArr[index]=tmp;
+        }
+        for (int i = 0; i <tmpArr.length ; i++) {
+            data[i/4][i%4]=tmpArr[i];
+        }
+    }
+
     private void initImage() {
-        int number=1;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                JLabel jLabel=new JLabel(new ImageIcon("image/animal/animal1/"+number+".jpg"));
+                //获取当前要加载图片的序号
+                int num=data[i][j];
+                JLabel jLabel=new JLabel(new ImageIcon("image/animal/animal2/"+num+".jpg"));
                 jLabel.setBounds(105*j,105*i,105,105);
                 this.getContentPane().add(jLabel);
-                number++;
             }
         }
     }
